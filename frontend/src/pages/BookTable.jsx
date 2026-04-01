@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import api from '../api/axiosInstance';
 
 const TIME_SLOTS = [
@@ -9,6 +11,7 @@ const TIME_SLOTS = [
 function BookTable() {
   const [step, setStep] = useState(1);
   const [date, setDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
   const [timeSlot, setTimeSlot] = useState('');
   const [tables, setTables] = useState([]);
   const [selectedTable, setSelectedTable] = useState(null);
@@ -16,6 +19,11 @@ function BookTable() {
   const [specialRequest, setSpecialRequest] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const handleDateChange = (d) => {
+    setSelectedDate(d);
+    setDate(d.toISOString().split('T')[0]);
+  };
 
   const searchTables = async () => {
     if (!date || !timeSlot) return;
@@ -74,9 +82,29 @@ function BookTable() {
               <div style={s.formGrid}>
                 <div style={s.field}>
                   <label style={s.label}>Select date</label>
-                  <input type="date" value={date}
-                    min={new Date().toISOString().split('T')[0]}
-                    onChange={(e) => setDate(e.target.value)} />
+                  <DatePicker
+                    selected={selectedDate}
+                    onChange={handleDateChange}
+                    minDate={new Date()}
+                    dateFormat="dd MMM yyyy"
+                    placeholderText="Pick a date"
+                    customInput={
+                      <input
+                        readOnly
+                        style={{
+                          width: '100%',
+                          padding: '0.85rem 1.1rem',
+                          background: 'rgba(255,255,255,0.04)',
+                          border: '1px solid rgba(255,255,255,0.09)',
+                          borderRadius: '10px',
+                          color: selectedDate ? '#ffffff' : '#6b7a9e',
+                          fontSize: '0.95rem',
+                          cursor: 'pointer',
+                          outline: 'none',
+                        }}
+                      />
+                    }
+                  />
                 </div>
                 <div style={s.field}>
                   <label style={s.label}>Select time</label>
@@ -98,7 +126,7 @@ function BookTable() {
             <div>
               <h2 style={s.cardTitle}>Select your table</h2>
               <div style={s.slotTags}>
-                <span style={s.tag}>{date}</span>
+                <span style={s.tag}>{selectedDate?.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
                 <span style={s.tag}>{timeSlot}</span>
               </div>
               {tables.length === 0 ? (
@@ -167,11 +195,11 @@ function BookTable() {
               <p style={s.successDesc}>Your table has been successfully booked.</p>
               <div style={s.successDetails}>
                 <div style={s.successRow}><span style={s.successKey}>Table</span><span style={s.successVal}>{selectedTable?.tableNumber} · {selectedTable?.location}</span></div>
-                <div style={s.successRow}><span style={s.successKey}>Date</span><span style={s.successVal}>{date}</span></div>
+                <div style={s.successRow}><span style={s.successKey}>Date</span><span style={s.successVal}>{selectedDate?.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span></div>
                 <div style={s.successRow}><span style={s.successKey}>Time</span><span style={s.successVal}>{timeSlot}</span></div>
                 <div style={s.successRow}><span style={s.successKey}>Guests</span><span style={s.successVal}>{guests}</span></div>
               </div>
-              <button style={s.outlineBtn} onClick={() => { setStep(1); setDate(''); setTimeSlot(''); setSelectedTable(null); }}>
+              <button style={s.outlineBtn} onClick={() => { setStep(1); setDate(''); setSelectedDate(null); setTimeSlot(''); setSelectedTable(null); }}>
                 Book Another Table
               </button>
             </div>
