@@ -65,6 +65,38 @@ button { font-family: var(--font-body); cursor: pointer; transition: var(--trans
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.2); border-radius: 3px; }
 
+/* ── Navbar responsive ── */
+@media (max-width: 768px) {
+  .nav-desktop { display: none !important; }
+  .nav-hamburger { display: flex !important; }
+}
+@media (min-width: 769px) {
+  .nav-hamburger { display: none !important; }
+  .nav-mobile-menu { display: none !important; }
+}
+
+/* ── Page padding on mobile ── */
+@media (max-width: 768px) {
+  .page-hero { padding: 5rem 1.25rem 3rem !important; }
+  .page-section { padding: 3rem 1.25rem !important; }
+  .page-card { padding: 1.5rem !important; }
+  .form-grid { grid-template-columns: 1fr !important; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .table-cards-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .booking-card { flex-direction: column !important; gap: 1rem !important; }
+  .booking-actions { flex-direction: row !important; align-self: flex-start !important; }
+  .hero-title { font-size: 2.2rem !important; }
+  .hero-stats { gap: 1.5rem !important; }
+  .cta-card { padding: 2.5rem 1.5rem !important; }
+  .stepper { gap: 0 !important; }
+  .step-label { display: none !important; }
+  .btn-row { flex-direction: column !important; }
+  .btn-row button { flex: unset !important; width: 100% !important; }
+  .add-form { flex-direction: column !important; }
+  .add-form input, .add-form select { max-width: 100% !important; width: 100% !important; }
+}
+
+/* ── Datepicker ── */
 .react-datepicker-wrapper { width: 100%; }
 .react-datepicker-popper { z-index: 999 !important; }
 
@@ -139,9 +171,7 @@ button { font-family: var(--font-body); cursor: pointer; transition: var(--trans
   color: #2a3050 !important;
 }
 
-.react-datepicker__navigation {
-  top: 1rem !important;
-}
+.react-datepicker__navigation { top: 1rem !important; }
 
 .react-datepicker__navigation-icon::before {
   border-color: #c9a84c !important;

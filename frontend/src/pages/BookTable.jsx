@@ -55,7 +55,7 @@ function BookTable() {
         <div style={s.header}>
           <p style={s.eyebrow}>Reservations</p>
           <h1 style={s.title}>Book a Table</h1>
-          <div style={s.stepper}>
+          <div className="stepper" style={s.stepper}>
             {stepLabels.map((label, i) => (
               <div key={i} style={s.stepItem}>
                 <div style={{
@@ -66,7 +66,7 @@ function BookTable() {
                 }}>
                   {step > i + 1 ? '✓' : i + 1}
                 </div>
-                <span style={{ ...s.stepLabel, color: step === i + 1 ? '#c9a84c' : '#6b7a9e' }}>{label}</span>
+                <span className="step-label" style={{ ...s.stepLabel, color: step === i + 1 ? '#c9a84c' : '#6b7a9e' }}>{label}</span>
                 {i < stepLabels.length - 1 && (
                   <div style={{ ...s.stepLine, background: step > i + 1 ? '#c9a84c' : 'rgba(255,255,255,0.08)' }} />
                 )}
@@ -79,7 +79,7 @@ function BookTable() {
           {step === 1 && (
             <div style={s.form}>
               <h2 style={s.cardTitle}>When would you like to dine?</h2>
-              <div style={s.formGrid}>
+              <div className="form-grid" style={s.formGrid}>
                 <div style={s.field}>
                   <label style={s.label}>Select date</label>
                   <DatePicker
@@ -158,7 +158,7 @@ function BookTable() {
                     ))}
                   </div>
                   <div style={s.form}>
-                    <div style={s.formGrid}>
+                    <div className="form-grid" style={s.formGrid}>
                       <div style={s.field}>
                         <label style={s.label}>Number of guests</label>
                         <input type="number" min="1" max="20" value={guests}
@@ -173,7 +173,7 @@ function BookTable() {
                         style={{ resize: 'vertical', fontFamily: "'Inter', sans-serif" }} />
                     </div>
                     {error && <p style={s.errorMsg}>{error}</p>}
-                    <div style={s.btnRow}>
+                    <div className="btn-row" style={s.btnRow}>
                       <button style={s.outlineBtn} onClick={() => setStep(1)}>← Back</button>
                       <button style={{ ...s.btn, opacity: (!selectedTable || loading) ? 0.5 : 1, flex: 2 }}
                         onClick={confirmBooking} disabled={!selectedTable || loading}>
@@ -211,19 +211,19 @@ function BookTable() {
 }
 
 const s = {
-  page: { background: '#0a0f1e', minHeight: '100vh', padding: '100px 2rem 4rem', position: 'relative', overflow: 'hidden' },
+  page: { background: '#0a0f1e', minHeight: '100vh', padding: 'clamp(80px, 12vw, 100px) clamp(1rem, 4vw, 2rem) 4rem', position: 'relative', overflow: 'hidden' },
   glow: { position: 'absolute', top: '15%', left: '50%', transform: 'translateX(-50%)', width: '700px', height: '400px', borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%)', pointerEvents: 'none' },
   container: { maxWidth: '660px', margin: '0 auto', position: 'relative', zIndex: 2 },
-  header: { textAlign: 'center', marginBottom: '3rem' },
+  header: { textAlign: 'center', marginBottom: '2.5rem' },
   eyebrow: { color: '#c9a84c', fontSize: '0.75rem', fontWeight: '500', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '0.5rem' },
-  title: { fontFamily: "'Syne', sans-serif", fontSize: '2.5rem', fontWeight: '700', color: '#ffffff', marginBottom: '2rem' },
-  stepper: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
-  stepItem: { display: 'flex', alignItems: 'center', gap: '0.6rem' },
-  stepCircle: { width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: '700', flexShrink: 0 },
-  stepLabel: { fontSize: '0.8rem', fontWeight: '500', whiteSpace: 'nowrap' },
-  stepLine: { width: '48px', height: '1px', margin: '0 0.5rem', flexShrink: 0 },
-  card: { background: 'rgba(15,21,32,0.9)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: '20px', padding: '2.5rem', backdropFilter: 'blur(20px)', boxShadow: '0 24px 60px rgba(0,0,0,0.3)' },
-  cardTitle: { fontFamily: "'Syne', sans-serif", fontSize: '1.25rem', fontWeight: '600', color: '#ffffff', marginBottom: '1.5rem' },
+  title: { fontFamily: "'Syne', sans-serif", fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', fontWeight: '700', color: '#ffffff', marginBottom: '1.5rem' },
+  stepper: { display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'nowrap' },
+  stepItem: { display: 'flex', alignItems: 'center', gap: '0.5rem' },
+  stepCircle: { width: '30px', height: '30px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.78rem', fontWeight: '700', flexShrink: 0 },
+  stepLabel: { fontSize: '0.78rem', fontWeight: '500', whiteSpace: 'nowrap' },
+  stepLine: { width: 'clamp(24px, 5vw, 48px)', height: '1px', margin: '0 0.4rem', flexShrink: 0 },
+  card: { background: 'rgba(15,21,32,0.9)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: '20px', padding: 'clamp(1.25rem, 4vw, 2.5rem)', backdropFilter: 'blur(20px)', boxShadow: '0 24px 60px rgba(0,0,0,0.3)' },
+  cardTitle: { fontFamily: "'Syne', sans-serif", fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: '600', color: '#ffffff', marginBottom: '1.5rem' },
   form: { display: 'flex', flexDirection: 'column', gap: '1.5rem' },
   formGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' },
   field: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
@@ -233,13 +233,13 @@ const s = {
   btnRow: { display: 'flex', gap: '1rem' },
   slotTags: { display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', flexWrap: 'wrap' },
   tag: { background: 'rgba(201,168,76,0.1)', border: '1px solid rgba(201,168,76,0.25)', color: '#e8c97a', padding: '0.35rem 0.9rem', borderRadius: '20px', fontSize: '0.82rem' },
-  tableGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '0.75rem', marginBottom: '2rem' },
+  tableGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))', gap: '0.75rem', marginBottom: '2rem' },
   tableCard: { border: '1px solid', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', transition: 'all 0.2s ease' },
-  tableTop: { padding: '1.1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease' },
-  tableNumber: { fontFamily: "'Syne', sans-serif", fontSize: '1.6rem', fontWeight: '700', transition: 'all 0.2s ease' },
-  tableName: { color: '#ffffff', fontWeight: '500', fontSize: '0.85rem', textAlign: 'center', padding: '0 0.75rem 0.2rem' },
-  tableMeta: { color: '#6b7a9e', fontSize: '0.78rem', textAlign: 'center' },
-  tableLoc: { color: '#6b7a9e', fontSize: '0.78rem', textAlign: 'center', paddingBottom: '0.75rem', textTransform: 'capitalize' },
+  tableTop: { padding: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease' },
+  tableNumber: { fontFamily: "'Syne', sans-serif", fontSize: 'clamp(1.2rem, 4vw, 1.6rem)', fontWeight: '700', transition: 'all 0.2s ease' },
+  tableName: { color: '#ffffff', fontWeight: '500', fontSize: '0.82rem', textAlign: 'center', padding: '0 0.5rem 0.2rem' },
+  tableMeta: { color: '#6b7a9e', fontSize: '0.75rem', textAlign: 'center' },
+  tableLoc: { color: '#6b7a9e', fontSize: '0.75rem', textAlign: 'center', paddingBottom: '0.75rem', textTransform: 'capitalize' },
   errorMsg: { color: '#f87171', fontSize: '0.88rem', background: 'rgba(239,68,68,0.08)', padding: '0.75rem', borderRadius: '8px', border: '1px solid rgba(239,68,68,0.15)' },
   empty: { textAlign: 'center', padding: '2.5rem 0' },
   emptyTitle: { fontFamily: "'Syne', sans-serif", fontSize: '1.3rem', color: '#ffffff', marginBottom: '0.5rem' },
@@ -247,7 +247,7 @@ const s = {
   success: { textAlign: 'center', padding: '1rem 0' },
   successIconWrap: { width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(201,168,76,0.1)', border: '1px solid rgba(201,168,76,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' },
   successIcon: { color: '#c9a84c', fontSize: '1.8rem' },
-  successTitle: { fontFamily: "'Syne', sans-serif", fontSize: '1.7rem', fontWeight: '700', color: '#ffffff', marginBottom: '0.5rem' },
+  successTitle: { fontFamily: "'Syne', sans-serif", fontSize: 'clamp(1.3rem, 4vw, 1.7rem)', fontWeight: '700', color: '#ffffff', marginBottom: '0.5rem' },
   successDesc: { color: '#6b7a9e', marginBottom: '2rem' },
   successDetails: { background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,168,76,0.1)', borderRadius: '12px', padding: '1.25rem', marginBottom: '2rem', textAlign: 'left' },
   successRow: { display: 'flex', justifyContent: 'space-between', padding: '0.5rem 0', borderBottom: '1px solid rgba(255,255,255,0.05)' },
